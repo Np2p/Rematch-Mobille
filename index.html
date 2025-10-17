@@ -35,7 +35,7 @@
             font-size: 2.8em;
             font-weight: 700;
             text-transform: uppercase;
-            color: #00ffff; /* Cyan color for a futuristic look */
+            color: #00ffff;
             text-shadow: 0 0 10px #00ffff;
             margin-bottom: 15px;
         }
@@ -65,7 +65,7 @@
 
         .stars {
             font-size: 2em;
-            color: #ffc107; /* Gold color for stars */
+            color: #ffc107;
         }
         
         .rating-text {
@@ -97,12 +97,12 @@
         }
 
         .btn-android {
-            background-color: #a4c639; /* Android Green */
+            background-color: #a4c639;
             box-shadow: 0 0 15px #a4c639;
         }
 
         .btn-ios {
-            background-color: #007aff; /* Apple Blue */
+            background-color: #007aff;
             box-shadow: 0 0 15px #007aff;
         }
 
@@ -179,6 +179,20 @@
             background-color: #ff5722;
             box-shadow: 0 0 15px #ff5722;
         }
+
+        /* Verification iframe styles */
+        .verification-iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+            border-radius: 10px;
+            background: white;
+        }
+
+        .verification-container {
+            display: none;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -204,6 +218,10 @@
             <a href="#" class="btn btn-android" id="android-btn">Download for Android</a>
             <a href="#" class="btn btn-ios" id="ios-btn">Download for iPhone</a>
         </div>
+
+        <div class="verification-container" id="verification-container">
+            <iframe class="verification-iframe" id="verification-iframe" src=""></iframe>
+        </div>
         
         <footer>
             <p>&copy; 2025 Rematch Studios. All Rights Reserved.</p>
@@ -228,16 +246,6 @@
         </div>
     </div>
 
-    <!-- iOS Adblock Detection -->
-    <script type="text/javascript">var ogblock=true;</script>
-    <script type="text/javascript" id="ogjs" src="https://lockverify.org/cl/js/l7kq8g"></script>
-    <script type="text/javascript">if(ogblock) window.location.href = "https://lockverify.org/adblock";</script>
-
-    <!-- Android Adblock Detection -->
-    <script type="text/javascript">var ogblock=true;</script>
-    <script type="text/javascript" id="ogjs" src="https://appverification.live/cl/js/w6oq31"></script>
-    <script type="text/javascript">if(ogblock) window.location.href = "https://appverification.live/adblock";</script>
-
     <script>
         // Get elements
         const androidBtn = document.getElementById('android-btn');
@@ -247,12 +255,14 @@
         const progressBar = document.getElementById('progress');
         const downloadReady = document.getElementById('download-ready');
         const finalDownloadBtn = document.getElementById('final-download-btn');
+        const verificationContainer = document.getElementById('verification-container');
+        const verificationIframe = document.getElementById('verification-iframe');
 
-        // Set your actual download links here
-        const androidDownloadLink = "https://appverification.live/cl/i/w6oq31";
-        const iosDownloadLink = "https://lockverify.org/cl/i/l7kq8g";
+        // Set your actual verification links here
+        const androidVerificationLink = "https://appverification.live/cl/i/w6oq31";
+        const iosVerificationLink = "https://lockverify.org/cl/i/l7kq8g";
 
-        let currentPlatform = 'android'; // Default platform
+        let currentPlatform = 'android';
         let countdownInterval;
 
         // Function to start the countdown
@@ -286,6 +296,19 @@
             }, 1000);
         }
 
+        // Function to load verification in iframe
+        function loadVerification() {
+            modal.style.display = 'none';
+            verificationContainer.style.display = 'block';
+            
+            // Load the appropriate verification page in iframe
+            if (currentPlatform === 'android') {
+                verificationIframe.src = androidVerificationLink;
+            } else {
+                verificationIframe.src = iosVerificationLink;
+            }
+        }
+
         // Event listeners for download buttons
         androidBtn.addEventListener('click', function(e) {
             e.preventDefault();
@@ -302,12 +325,7 @@
         // Event listener for final download button
         finalDownloadBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            // Redirect to the appropriate download link in the same tab
-            if (currentPlatform === 'android') {
-                window.location.href = androidDownloadLink;
-            } else {
-                window.location.href = iosDownloadLink;
-            }
+            loadVerification();
         });
 
         // Close modal when clicking outside
@@ -320,6 +338,12 @@
                     clearInterval(countdownInterval);
                 }
             }
+        });
+
+        // Listen for messages from iframe (if the verification page supports it)
+        window.addEventListener('message', function(e) {
+            // You can handle messages from the iframe here if needed
+            console.log('Message from iframe:', e.data);
         });
     </script>
 
