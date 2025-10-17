@@ -4,236 +4,449 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rematch Mobile - Download Now</title>
-    <style>
-        /* Importing a distinctive font from Google Fonts */
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+    <meta name="description" content="Experience the ultimate football battle in Rematch Mobile. Outsmart your opponents and seize victory!">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Exo+2:wght@300;400;600&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-        body {
-            font-family: 'Orbitron', sans-serif;
-            background-color: #121212;
-            color: #ffffff;
+    <style>
+        :root {
+            --primary: #00ffff;
+            --primary-dark: #00cccc;
+            --secondary: #ff5722;
+            --secondary-dark: #e64a19;
+            --android: #a4c639;
+            --ios: #007aff;
+            --bg-dark: #10101a;
+            --bg-card: rgba(20, 20, 30, 0.8);
+            --text-light: #f1f1f1;
+            --text-muted: #aaaaaa;
+            --warning: #ffc107;
+            /* Switched font order for English primary */
+            --font-main: 'Exo 2', 'Cairo', sans-serif;
+            --font-title: 'Orbitron', sans-serif;
+        }
+
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.7;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 15%, hsla(180, 100%, 50%, 0.1) 0%, transparent 25%),
+                radial-gradient(circle at 85% 85%, hsla(14, 100%, 57%, 0.1) 0%, transparent 25%);
+            min-height: 100vh;
+        }
+
+        .page-wrapper {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
+            padding: 2rem 1rem;
             min-height: 100vh;
-            text-align: center;
         }
 
         .container {
-            max-width: 600px;
+            max-width: 800px;
             width: 100%;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.6);
-            border-radius: 15px;
-            box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
-            border: 1px solid rgba(0, 255, 255, 0.5);
+            padding: 2.5rem;
+            background: var(--bg-card);
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px hsla(180, 100%, 50%, 0.1);
+            backdrop-filter: blur(12px);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            animation: fadeIn 1s ease-out;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            z-index: 2;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
         }
 
         .game-title {
-            font-size: 2.8em;
-            font-weight: 700;
+            font-family: var(--font-title);
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: 900;
             text-transform: uppercase;
-            color: #00ffff;
-            text-shadow: 0 0 10px #00ffff;
-            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 5px 20px hsla(180, 100%, 50%, 0.3);
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+        }
+
+        .game-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            font-weight: 400;
         }
 
         .game-image-wrapper {
-            margin-bottom: 20px;
+            margin: 2rem 0;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
+        .game-image-wrapper:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.7);
+        }
         .game-image {
             width: 100%;
-            max-width: 400px;
             height: auto;
-            border-radius: 10px;
-            border: 3px solid #00ffff;
-            object-fit: cover;
+            display: block;
         }
-        
+
         .tagline {
-            font-size: 1.2em;
-            margin-bottom: 25px;
-            color: #f1f1f1;
+            font-size: 1.4rem;
+            text-align: center;
+            margin: 2rem 0;
+            padding: 1rem;
+            background: hsla(180, 100%, 50%, 0.1);
+            border-radius: 12px;
+            /* Changed from border-right for LTR */
+            border-left: 4px solid var(--primary);
+            font-weight: 700;
         }
-        
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin: 2.5rem 0;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            transition: transform 0.3s ease, background 0.3s ease;
+            border: 1px solid transparent;
+        }
+        .feature:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.07);
+            border-color: hsla(180, 100%, 50%, 0.2);
+        }
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        .feature-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .feature-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
         .rating-section {
-            margin-bottom: 30px;
-        }
-
-        .stars {
-            font-size: 2em;
-            color: #ffc107;
-        }
-        
-        .rating-text {
-            font-size: 1.1em;
-            margin-top: 5px;
-            color: #cccccc;
-        }
-
-        .download-buttons {
             display: flex;
             flex-direction: column;
-            gap: 15px;
             align-items: center;
+            margin: 2.5rem 0;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+        }
+        .stars {
+            font-size: 2.2rem;
+            color: var(--warning);
+            margin-bottom: 0.5rem;
+            letter-spacing: 5px;
+        }
+        .rating-text { font-size: 1.1rem; }
+        .rating-count { font-size: 0.9rem; color: var(--text-muted); }
+
+        .download-section h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-family: var(--font-title);
+            font-size: 2rem;
+        }
+        .download-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
         }
 
         .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
             text-decoration: none;
-            color: #121212;
-            font-family: 'Orbitron', sans-serif;
+            color: white;
+            font-family: var(--font-title);
             font-weight: 700;
-            font-size: 1.2em;
-            padding: 15px 30px;
-            border-radius: 50px;
+            font-size: 1.2rem;
+            padding: 18px 25px;
+            border-radius: 14px;
             border: none;
             cursor: pointer;
             transition: all 0.3s ease;
-            width: 80%;
-            max-width: 300px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
-
-        .btn-android {
-            background-color: #a4c639;
-            box-shadow: 0 0 15px #a4c639;
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+            transition: left 0.6s ease;
         }
-
-        .btn-ios {
-            background-color: #007aff;
-            box-shadow: 0 0 15px #007aff;
-        }
-
+        .btn:hover::before { left: 100%; }
         .btn:hover {
-            transform: scale(1.05);
-            filter: brightness(1.2);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
         }
-        
-        footer {
-            margin-top: 30px;
-            font-size: 0.8em;
-            color: #888;
+        .btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
+        .btn-android { background: linear-gradient(135deg, var(--android), #8ab033); }
+        .btn-ios { background: linear-gradient(135deg, var(--ios), #0066cc); }
+        .btn-icon { font-size: 1.5rem; }
+        .btn-download { background: linear-gradient(135deg, var(--secondary), var(--secondary-dark)); }
 
-        /* Modal styles */
+        footer {
+            margin-top: 2.5rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1.5rem;
+        }
+        .footer-links { display: flex; justify-content: center; gap: 20px; margin-top: 10px; }
+        .footer-link { color: var(--text-muted); text-decoration: none; transition: color 0.3s ease; }
+        .footer-link:hover { color: var(--primary); }
+
+        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
+            z-index: 1000;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
+            background-color: rgba(0, 0, 0, 0.85);
             justify-content: center;
             align-items: center;
+            backdrop-filter: blur(8px);
+            animation: fadeIn 0.3s ease;
         }
-
         .modal-content {
-            background: rgba(0, 0, 0, 0.9);
-            padding: 30px;
-            border-radius: 15px;
+            background: var(--bg-card);
+            padding: 40px;
+            border-radius: 20px;
             text-align: center;
-            border: 2px solid #00ffff;
-            box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
-            max-width: 400px;
-            width: 80%;
+            border: 1px solid hsla(180, 100%, 50%, 0.3);
+            box-shadow: 0 0 40px hsla(180, 100%, 50%, 0.3);
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            animation: slideUp 0.5s ease;
         }
-
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        .modal-close:hover { color: var(--primary); transform: rotate(90deg); }
         .modal-title {
-            font-size: 1.8em;
-            color: #00ffff;
+            font-family: var(--font-title);
+            font-size: 2rem;
+            color: var(--primary);
             margin-bottom: 20px;
+            text-shadow: 0 0 10px hsla(180, 100%, 50%, 0.5);
         }
-
-        .countdown {
-            font-size: 2.5em;
-            color: #ffc107;
-            margin: 20px 0;
-        }
-
         .progress-bar {
             width: 100%;
-            height: 10px;
-            background-color: #333;
-            border-radius: 5px;
-            margin: 20px 0;
+            height: 12px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin: 25px 0;
             overflow: hidden;
         }
-
         .progress {
             height: 100%;
             width: 0%;
-            background-color: #00ffff;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 10px;
             transition: width 0.1s linear;
         }
-
         .download-ready {
             display: none;
-            margin-top: 20px;
+            margin-top: 25px;
+            animation: fadeIn 0.5s ease;
+        }
+        .download-ready p {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
         }
 
-        .btn-download {
-            background-color: #ff5722;
-            box-shadow: 0 0 15px #ff5722;
+        /* Verification Iframe Modal */
+        .verification-modal-content {
+            padding: 1rem;
+            width: 95%;
+            max-width: 900px;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
         }
-
-        /* Verification iframe styles */
-        .verification-iframe {
+        #verification-iframe {
             width: 100%;
-            height: 500px;
+            height: 100%;
             border: none;
-            border-radius: 10px;
-            background: white;
+            border-radius: 15px;
+            display: none; /* Initially hidden */
+        }
+        .iframe-loader {
+            border: 5px solid rgba(255, 255, 255, 0.2);
+            border-top: 5px solid var(--primary);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: auto;
         }
 
-        .verification-container {
-            display: none;
-            margin-top: 20px;
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 15px hsla(14, 100%, 57%, 0.3); }
+            50% { transform: scale(1.05); box-shadow: 0 0 30px hsla(14, 100%, 57%, 0.6); }
+            100% { transform: scale(1); box-shadow: 0 0 15px hsla(14, 100%, 57%, 0.3); }
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container { padding: 1.5rem; }
+            .features, .download-buttons { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        
-        <h1 class="game-title">Rematch Mobile</h1>
+    <div class="page-wrapper">
+        <main class="container">
+            <header class="header">
+                <h1 class="game-title">Rematch Mobile</h1>
+                <p class="game-subtitle">The Ultimate Football Battle Experience</p>
+            </header>
 
-        <div class="game-image-wrapper">
-            <img src="https://cdn.salla.sa/qQXbgV/IWr0jwb5oAK2pV8Y3JT97Q8UYV4vIZ3K5JGOAptg.png" alt="Rematch Mobile Game" class="game-image">
-        </div>
+            <figure class="game-image-wrapper">
+                <img src="https://cdn.salla.sa/qQXbgV/IWr0jwb5oAK2pV8Y3JT97Q8UYV4vIZ3K5JGOAptg.png" alt="Screenshot from Rematch Mobile game" class="game-image">
+            </figure>
 
-        <p class="tagline">Rematch Mobile Game Experience: Live the football battle. Outsmart your opponents and seize victory!!</p>
+            <p class="tagline">Live the football battle. Outsmart your opponents and seize victory!</p>
 
-        <div class="rating-section">
-            <div class="stars">
-                &#9733;&#9733;&#9733;&#9733;&#9734;
-            </div>
-            <p class="rating-text">Rated 4.5 / 5 by thousands of players</p>
-        </div>
+            <section class="features">
+                <div class="feature">
+                    <div class="feature-icon"><i class="fa-solid fa-futbol"></i></div>
+                    <h3 class="feature-title">Realistic Gameplay</h3>
+                    <p class="feature-desc">Enjoy realistic football mechanics and physics.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon"><i class="fa-solid fa-trophy"></i></div>
+                    <h3 class="feature-title">Compete & Win</h3>
+                    <p class="feature-desc">Join tournaments and top the leaderboards.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon"><i class="fa-solid fa-users"></i></div>
+                    <h3 class="feature-title">Multiplayer</h3>
+                    <p class="feature-desc">Challenge friends or players worldwide.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon"><i class="fa-solid fa-gamepad"></i></div>
+                    <h3 class="feature-title">Easy Controls</h3>
+                    <p class="feature-desc">Simple controls designed specifically for mobile.</p>
+                </div>
+            </section>
 
-        <div class="download-buttons">
-            <a href="#" class="btn btn-android" id="android-btn">Download for Android</a>
-            <a href="#" class="btn btn-ios" id="ios-btn">Download for iPhone</a>
-        </div>
+            <section class="rating-section">
+                <div class="stars">★★★★☆</div>
+                <p class="rating-text">Rated 4.5 / 5 by thousands of players</p>
+                <p class="rating-count">Over 500,000 downloads worldwide</p>
+            </section>
 
-        <div class="verification-container" id="verification-container">
-            <iframe class="verification-iframe" id="verification-iframe" src=""></iframe>
-        </div>
+            <section class="download-section">
+                <h2>Download Now</h2>
+                <div class="download-buttons">
+                    <a href="#" class="btn btn-android" id="android-btn">
+                        <i class="fa-brands fa-android btn-icon"></i>
+                        <span>Download for Android</span>
+                    </a>
+                    <a href="#" class="btn btn-ios" id="ios-btn">
+                        <i class="fa-brands fa-apple btn-icon"></i>
+                        <span>Download for iPhone</span>
+                    </a>
+                </div>
+            </section>
+        </main>
         
         <footer>
             <p>&copy; 2025 Rematch Studios. All Rights Reserved.</p>
+            <div class="footer-links">
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">Terms of Service</a>
+                <a href="#" class="footer-link">Support</a>
+            </div>
         </footer>
-
     </div>
 
-    <!-- Modal for waiting -->
-    <div class="modal" id="waiting-modal">
+    <div class="modal" id="countdown-modal">
         <div class="modal-content">
-            <h2 class="modal-title">Please Wait</h2>
-            <p>Your download will begin in <span id="countdown">8</span> seconds</p>
+            <button class="modal-close" data-close-modal>&times;</button>
+            <h2 class="modal-title">Preparing Download...</h2>
+            <p>Your download will begin in <span id="countdown-seconds">8</span> seconds.</p>
             
             <div class="progress-bar">
                 <div class="progress" id="progress"></div>
@@ -241,111 +454,151 @@
             
             <div class="download-ready" id="download-ready">
                 <p>Your download is ready!</p>
-                <a href="#" class="btn btn-download" id="final-download-btn">Download Now</a>
+                <a href="#" class="btn btn-download" id="final-download-btn">
+                    <i class="fa-solid fa-download btn-icon"></i>
+                    <span>Click Here to Download</span>
+                </a>
             </div>
         </div>
     </div>
 
+    <div class="modal" id="verification-modal">
+        <div class="modal-content verification-modal-content">
+            <button class="modal-close" data-close-modal>&times;</button>
+            <div class="iframe-loader" id="iframe-loader"></div>
+            <iframe id="verification-iframe" src="about:blank"></iframe>
+        </div>
+    </div>
+
     <script>
-        // Get elements
-        const androidBtn = document.getElementById('android-btn');
-        const iosBtn = document.getElementById('ios-btn');
-        const modal = document.getElementById('waiting-modal');
-        const countdownElement = document.getElementById('countdown');
-        const progressBar = document.getElementById('progress');
-        const downloadReady = document.getElementById('download-ready');
-        const finalDownloadBtn = document.getElementById('final-download-btn');
-        const verificationContainer = document.getElementById('verification-container');
-        const verificationIframe = document.getElementById('verification-iframe');
-
-        // Set your actual verification links here
-        const androidVerificationLink = "https://appverification.live/cl/i/w6oq31";
-        const iosVerificationLink = "https://lockverify.org/cl/i/l7kq8g";
-
-        let currentPlatform = 'android';
-        let countdownInterval;
-
-        // Function to start the countdown
-        function startCountdown() {
-            let seconds = 8;
-            modal.style.display = 'flex';
-            countdownElement.textContent = seconds;
-            downloadReady.style.display = 'none';
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- DOM Elements ---
+            const androidBtn = document.getElementById('android-btn');
+            const iosBtn = document.getElementById('ios-btn');
+            const finalDownloadBtn = document.getElementById('final-download-btn');
             
-            // Reset progress bar
-            progressBar.style.width = '0%';
+            const countdownModal = document.getElementById('countdown-modal');
+            const verificationModal = document.getElementById('verification-modal');
+            const closeButtons = document.querySelectorAll('[data-close-modal]');
+
+            const countdownElement = document.getElementById('countdown-seconds');
+            const progressBar = document.getElementById('progress');
+            const downloadReady = document.getElementById('download-ready');
             
-            // Clear any existing interval
-            if (countdownInterval) {
+            const verificationIframe = document.getElementById('verification-iframe');
+            const iframeLoader = document.getElementById('iframe-loader');
+
+            // --- Download Links ---
+            const androidDownloadLink = "https://appverification.live/cl/i/w6oq31";
+            const iosDownloadLink = "https://lockverify.org/cl/i/l7kq8g";
+
+            // --- State ---
+            let currentPlatform = 'android';
+            let countdownInterval;
+
+            // --- Functions ---
+            const openModal = (modal) => {
+                if(modal) modal.style.display = 'flex';
+            };
+
+            const closeModal = (modal) => {
+                if(modal) modal.style.display = 'none';
+            };
+            
+            const resetCountdownModal = () => {
                 clearInterval(countdownInterval);
-            }
-            
-            countdownInterval = setInterval(() => {
-                seconds--;
-                countdownElement.textContent = seconds;
-                
-                // Update progress bar
-                const progressPercentage = ((8 - seconds) / 8) * 100;
-                progressBar.style.width = `${progressPercentage}%`;
-                
-                if (seconds <= 0) {
-                    clearInterval(countdownInterval);
-                    // Show download button
-                    downloadReady.style.display = 'block';
-                }
-            }, 1000);
-        }
-
-        // Function to load verification in iframe
-        function loadVerification() {
-            modal.style.display = 'none';
-            verificationContainer.style.display = 'block';
-            
-            // Load the appropriate verification page in iframe
-            if (currentPlatform === 'android') {
-                verificationIframe.src = androidVerificationLink;
-            } else {
-                verificationIframe.src = iosVerificationLink;
-            }
-        }
-
-        // Event listeners for download buttons
-        androidBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            currentPlatform = 'android';
-            startCountdown();
-        });
-
-        iosBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            currentPlatform = 'ios';
-            startCountdown();
-        });
-
-        // Event listener for final download button
-        finalDownloadBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            loadVerification();
-        });
-
-        // Close modal when clicking outside
-        window.addEventListener('click', function(e) {
-            if (e.target === modal) {
-                modal.style.display = 'none';
-                // Reset the modal state
+                countdownInterval = null;
+                progressBar.style.width = '0%';
                 downloadReady.style.display = 'none';
-                if (countdownInterval) {
-                    clearInterval(countdownInterval);
-                }
-            }
-        });
+                finalDownloadBtn.style.animation = 'none';
+                countdownElement.parentElement.style.display = 'block';
+            };
 
-        // Listen for messages from iframe (if the verification page supports it)
-        window.addEventListener('message', function(e) {
-            // You can handle messages from the iframe here if needed
-            console.log('Message from iframe:', e.data);
+            const startCountdown = () => {
+                resetCountdownModal();
+                let seconds = 8;
+                countdownElement.textContent = seconds;
+                openModal(countdownModal);
+                
+                countdownInterval = setInterval(() => {
+                    seconds--;
+                    countdownElement.textContent = seconds;
+                    const progressPercentage = ((8 - seconds) / 8) * 100;
+                    progressBar.style.width = `${progressPercentage}%`;
+                    
+                    if (seconds <= 0) {
+                        clearInterval(countdownInterval);
+                        countdownElement.parentElement.style.display = 'none';
+                        downloadReady.style.display = 'block';
+                        finalDownloadBtn.style.animation = 'pulse 2s infinite';
+                    }
+                }, 1000);
+            };
+
+            // *** NEW: Function to load verification in iframe ***
+            const loadVerification = () => {
+                const link = (currentPlatform === 'android') ? androidDownloadLink : iosDownloadLink;
+                
+                // Reset iframe state
+                verificationIframe.src = 'about:blank';
+                iframeLoader.style.display = 'block';
+                verificationIframe.style.display = 'none';
+
+                // Close countdown modal and open verification modal
+                closeModal(countdownModal);
+                openModal(verificationModal);
+
+                // Set the source and wait for it to load
+                verificationIframe.src = link;
+                verificationIframe.onload = () => {
+                    // Hide loader and show iframe once content is ready
+                    iframeLoader.style.display = 'none';
+                    verificationIframe.style.display = 'block';
+                };
+            };
+            
+            // --- Event Listeners ---
+            androidBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                currentPlatform = 'android';
+                startCountdown();
+            });
+
+            iosBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                currentPlatform = 'ios';
+                startCountdown();
+            });
+
+            finalDownloadBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                loadVerification();
+            });
+
+            // Close modal logic
+            closeButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const modal = button.closest('.modal');
+                    closeModal(modal);
+                });
+            });
+
+            // Reset modals when they are closed
+            [countdownModal, verificationModal].forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        closeModal(modal);
+                    }
+                });
+                // When transition ends after closing, reset its state
+                modal.addEventListener('transitionend', () => {
+                    if(modal.style.display === 'none') {
+                        if(modal.id === 'countdown-modal') resetCountdownModal();
+                        if(modal.id === 'verification-modal') verificationIframe.src = 'about:blank';
+                    }
+                });
+            });
         });
     </script>
-
 </body>
 </html>
