@@ -243,17 +243,24 @@
         const iosDownloadLink = "https://appverification.live/cl/i/l7kq8g";
 
         let currentPlatform = 'android'; // Default platform
+        let countdownInterval;
 
         // Function to start the countdown
         function startCountdown() {
             let seconds = 8;
             modal.style.display = 'flex';
             countdownElement.textContent = seconds;
+            downloadReady.style.display = 'none';
             
             // Reset progress bar
             progressBar.style.width = '0%';
             
-            const countdownInterval = setInterval(() => {
+            // Clear any existing interval
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+            }
+            
+            countdownInterval = setInterval(() => {
                 seconds--;
                 countdownElement.textContent = seconds;
                 
@@ -285,7 +292,7 @@
         // Event listener for final download button
         finalDownloadBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            // Redirect to the appropriate download link
+            // Redirect to the appropriate download link in the same tab
             if (currentPlatform === 'android') {
                 window.location.href = androidDownloadLink;
             } else {
@@ -299,6 +306,9 @@
                 modal.style.display = 'none';
                 // Reset the modal state
                 downloadReady.style.display = 'none';
+                if (countdownInterval) {
+                    clearInterval(countdownInterval);
+                }
             }
         });
     </script>
